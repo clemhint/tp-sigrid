@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0f1115" />
+  <title>Trainingsplan Sigrid</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <h1>Trainingsplan Sigrid</h1>
+      <nav class="day-tabs" id="day-tabs"></nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="day-header" id="day-header"></div>
+
+    <div class="progress-wrap">
+      <div class="progress-bar-track">
+        <div class="progress-bar-fill" id="progress-fill"></div>
+      </div>
+      <div class="progress-label">
+        <span id="progress-text">0 / 0 Sätze erledigt (0%)</span>
+        <button class="small-btn" id="reset-btn" type="button">Sätze zurücksetzen</button>
+      </div>
+    </div>
+
+    <div class="storage-warning" id="storage-warning" hidden>
+      Der Browser erlaubt hier keine dauerhafte Speicherung. Eingaben gehen beim Schließen verloren.
+    </div>
+
+    <div class="exercise-list" id="exercise-list"></div>
+
+    <section class="backup">
+      <div class="backup-title">Datensicherung</div>
+      <p>Die Gewichte werden auf diesem Gerät im Browser gespeichert. Mit einer Sicherungsdatei kannst du sie auf ein anderes Gerät übertragen oder wiederherstellen.</p>
+      <div class="backup-actions">
+        <button class="small-btn" id="export-btn" type="button">Sicherung herunterladen</button>
+        <button class="small-btn" id="import-btn" type="button">Sicherung einlesen</button>
+        <input type="file" id="import-file" accept="application/json,.json" hidden />
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Tippe auf einen Satz, um ihn abzuhaken (wird täglich zurückgesetzt). Das eingetragene Gewicht wird mit dem heutigen Datum gespeichert und beim nächsten Mal angezeigt.
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
