@@ -72,7 +72,7 @@
   }
 
   function exerciseKey(uebung) {
-    return uebung.name.trim().toLowerCase();
+    return (uebung.key || uebung.name).trim().toLowerCase();
   }
 
   // Gewichte: { [exerciseKey]: [{ datum: "YYYY-MM-DD", kg: Number }, ...] } (chronologisch)
@@ -141,7 +141,7 @@
 
   function dayForToday() {
     const wd = new Date().getDay();
-    const match = TRAININGSPLAN.find((d) => d.wochentage.length === 1 && d.wochentage[0] === wd);
+    const match = TRAININGSPLAN.find((d) => d.wochentage.includes(wd));
     return match ? match.id : null;
   }
 
@@ -160,8 +160,8 @@
     TRAININGSPLAN.forEach((day) => {
       const btn = document.createElement("button");
       btn.type = "button";
-      btn.className = "day-tab" + (day.id === activeDayId ? " active" : "") + (day.hinweis ? " optional" : "");
-      btn.innerHTML = `${day.tag}<span class="tab-sub">${day.hinweis ? "optional" : day.wochentag}</span>`;
+      btn.className = "day-tab" + (day.id === activeDayId ? " active" : "") + (day.optional ? " optional" : "");
+      btn.innerHTML = `${day.kurz}<span class="tab-sub">${day.titel}</span>`;
       btn.addEventListener("click", () => selectDay(day.id));
       tabsEl.appendChild(btn);
     });
@@ -199,8 +199,8 @@
     if (!day) return;
 
     dayHeaderEl.innerHTML = `
-      <h2>${day.tag} <span class="wochentag">(${day.wochentag})</span></h2>
-      ${day.hinweis ? `<div class="fokus">${day.hinweis}</div>` : ""}
+      <h2>${day.tag}: ${day.titel}${day.optional ? ' <span class="wochentag">(optional)</span>' : ""}</h2>
+      ${day.fokus ? `<div class="fokus">${day.fokus}</div>` : ""}
     `;
 
     const progress = loadProgress(day.id);
@@ -232,6 +232,7 @@
           ${uebung.geraet ? `<span class="badge">${uebung.geraet}</span>` : ""}
           <span class="badge badge-strong">${uebung.saetze} × ${uebung.wdh}</span>
         </div>
+        ${uebung.hinweis ? `<div class="hinweis">${uebung.hinweis}</div>` : ""}
         <div class="exercise-body">
           <div class="sets-row">${setsHtml}</div>
           <label class="weight-field">
